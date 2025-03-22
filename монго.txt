@@ -109,6 +109,7 @@ db.createCollection("orders", {
   }
 });
 
+
 db.createCollection("reviews", {
   validator: {
     $jsonSchema: {
@@ -514,190 +515,191 @@ db.customers.insertMany([
   }
 ]);
 
+
 db.orders.insertMany([
   {
-    customerId: ObjectId("..."), // Вставьте действительный ID покупателя
+    customerId: ObjectId("67deba70de73e442d4e5baa1"), // Вставьте действительный ID покупателя
     products: [
-      { productId: ObjectId("..."), quantity: 1 }, // Вставьте действительный ID товара
-      { productId: ObjectId("..."), quantity: 2 }
+      { productId: ObjectId("67deba6fde73e442d4e5ba8d"), quantity: 1 }, // Вставьте действительный ID товара
+      { productId: ObjectId("67deba6fde73e442d4e5ba8e"), quantity: 2 }
     ],
     totalAmount: NumberDecimal("2000.50"),
     status: "pending",
     orderDate: new Date()
   },
   {
-    customerId: ObjectId("..."), // Вставьте действительный ID покупателя
+    customerId: ObjectId("67deba70de73e442d4e5baa2"), // Вставьте действительный ID покупателя
     products: [
-      { productId: ObjectId("..."), quantity: 1 }
+      { productId: ObjectId("67deba6fde73e442d4e5ba8f"), quantity: 1 }
     ],
     totalAmount: NumberDecimal("800.00"),
     status: "shipped",
     orderDate: new Date()
   },
   {
-    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    customerId: ObjectId("67deba70de73e442d4e5baa3"), // Замените на действительный ID покупателя
     products: [
-      { productId: ObjectId(""), quantity: 1 }, // Замените на действительный ID товара
-      { productId: ObjectId(""), quantity: 2 }
+      { productId: ObjectId("67deba6fde73e442d4e5ba90"), quantity: 1 }, // Замените на действительный ID товара
+      { productId: ObjectId("67deba6fde73e442d4e5ba91"), quantity: 2 }
     ],
     totalAmount: NumberDecimal("2000.50"),
     status: "pending",
     orderDate: new Date()
   },
   {
-    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    customerId: ObjectId("67deba70de73e442d4e5baa4"), // Замените на действительный ID покупателя
     products: [
-      { productId: ObjectId(""), quantity: 1 }
+      { productId: ObjectId("67deba6fde73e442d4e5ba92"), quantity: 1 }
     ],
     totalAmount: NumberDecimal("800.00"),
     status: "shipped",
     orderDate: new Date()
   },
   {
-    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    customerId: ObjectId("67deba70de73e442d4e5baa5"), // Замените на действительный ID покупателя
     products: [
-      { productId: ObjectId(""), quantity: 3 },
-      { productId: ObjectId(""), quantity: 1 }
+      { productId: ObjectId("67deba6fde73e442d4e5ba93"), quantity: 3 },
+      { productId: ObjectId("67deba6fde73e442d4e5ba94"), quantity: 1 }
     ],
     totalAmount: NumberDecimal("450.75"),
     status: "delivered",
     orderDate: new Date()
   },
   {
-    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    customerId: ObjectId("67deba70de73e442d4e5baa6"), // Замените на действительный ID покупателя
     products: [
-      { productId: ObjectId(""), quantity: 2 }
+      { productId: ObjectId("67deba6fde73e442d4e5ba95"), quantity: 2 }
     ],
     totalAmount: NumberDecimal("300.00"),
     status: "pending",
     orderDate: new Date()
   },
   {
-    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    customerId: ObjectId("67deba70de73e442d4e5baa7"), // Замените на действительный ID покупателя
     products: [
-      { productId: ObjectId(""), quantity: 1 },
-      { productId: ObjectId(""), quantity: 1 }
+      { productId: ObjectId("67deba6fde73e442d4e5ba96"), quantity: 1 },
+      { productId: ObjectId("67deba6fde73e442d4e5ba97"), quantity: 1 }
     ],
     totalAmount: NumberDecimal("340.00"),
     status: "shipped",
     orderDate: new Date()
   },
   {
-    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    customerId: ObjectId("67deba70de73e442d4e5baa8"), // Замените на действительный ID покупателя
     products: [
-      { productId: ObjectId(""), quantity: 4 }
+      { productId: ObjectId("67deba6fde73e442d4e5ba98"), quantity: 4 }
     ],
     totalAmount: NumberDecimal("180.00"),
     status: "delivered",
     orderDate: new Date()
   },
   {
-    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    customerId: ObjectId("67deba70de73e442d4e5baa9"), // Замените на действительный ID покупателя
     products: [
-      { productId: ObjectId(""), quantity: 2 },
-      { productId: ObjectId(""), quantity: 1 }
+      { productId: ObjectId("67deba6fde73e442d4e5ba99"), quantity: 2 },
+      { productId: ObjectId("67deba6fde73e442d4e5ba9a"), quantity: 1 }
     ],
     totalAmount: NumberDecimal("500.00"),
     status: "pending",
     orderDate: new Date()
   },
   {
-    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    customerId: ObjectId("67deba70de73e442d4e5baaa"), // Замените на действительный ID покупателя
     products: [
-      { productId: ObjectId(""), quantity: 1 }
+      { productId: ObjectId("67deba6fde73e442d4e5ba9b"), quantity: 1 }
     ],
     totalAmount: NumberDecimal("250.00"),
     status: "shipped",
     orderDate: new Date()
   },
   {
-    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    customerId: ObjectId("67deba70de73e442d4e5baab"), // Замените на действительный ID покупателя
     products: [
-      { productId: ObjectId(""), quantity: 3 }
+      { productId: ObjectId("67deba6fde73e442d4e5ba9c"), quantity: 3 }
     ],
     totalAmount: NumberDecimal("270.00"),
     status: "delivered",
     orderDate: new Date()
   },
   {
-    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    customerId: ObjectId("67deba70de73e442d4e5baac"), // Замените на действительный ID покупателя
     products: [
-      { productId: ObjectId(""), quantity: 1 },
-      { productId: ObjectId(""), quantity: 2 }
+      { productId: ObjectId("67deba6fde73e442d4e5ba9d"), quantity: 1 },
+      { productId: ObjectId("67deba6fde73e442d4e5ba9e"), quantity: 2 }
     ],
     totalAmount: NumberDecimal("360.00"),
     status: "pending",
     orderDate: new Date()
   },
   {
-    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    customerId: ObjectId("67deba70de73e442d4e5baad"), // Замените на действительный ID покупателя
     products: [
-      { productId: ObjectId(""), quantity: 1 }
+      { productId: ObjectId("67deba70de73e442d4e5ba9f"), quantity: 1 }
     ],
     totalAmount: NumberDecimal("90.00"),
     status: "shipped",
     orderDate: new Date()
   },
   {
-    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    customerId: ObjectId("67deba70de73e442d4e5baae"), // Замените на действительный ID покупателя
     products: [
-      { productId: ObjectId(""), quantity: 2 }
+      { productId: ObjectId("67deba70de73e442d4e5baa0"), quantity: 2 }
     ],
     totalAmount: NumberDecimal("180.00"),
     status: "delivered",
     orderDate: new Date()
   },
   {
-    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    customerId: ObjectId("67deba70de73e442d4e5baaf"), // Замените на действительный ID покупателя
     products: [
-      { productId: ObjectId(""), quantity: 1 },
-      { productId: ObjectId(""), quantity: 1 }
+      { productId: ObjectId("67deba70de73e442d4e5baa0"), quantity: 1 },
+      { productId: ObjectId("67deba70de73e442d4e5baa0"), quantity: 1 }
     ],
     totalAmount: NumberDecimal("140.00"),
     status: "pending",
     orderDate: new Date()
   },
   {
-    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    customerId: ObjectId("67deba70de73e442d4e5bab0"), // Замените на действительный ID покупателя
     products: [
-      { productId: ObjectId(""), quantity: 3 }
+      { productId: ObjectId("67deba70de73e442d4e5baa0"), quantity: 3 }
     ],
     totalAmount: NumberDecimal("330.00"),
     status: "shipped",
     orderDate: new Date()
   },
   {
-    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    customerId: ObjectId("67deba70de73e442d4e5bab1"), // Замените на действительный ID покупателя
     products: [
-      { productId: ObjectId(""), quantity: 1 }
+      { productId: ObjectId("67deba6fde73e442d4e5ba9d"), quantity: 1 }
     ],
     totalAmount: NumberDecimal("120.00"),
     status: "delivered",
     orderDate: new Date()
   },
   {
-    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    customerId: ObjectId("67deba70de73e442d4e5bab2"), // Замените на действительный ID покупателя
     products: [
-      { productId: ObjectId(""), quantity: 2 },
-      { productId: ObjectId(""), quantity: 1 }
+      { productId: ObjectId("67deba6fde73e442d4e5ba9d"), quantity: 2 },
+      { productId: ObjectId("67deba6fde73e442d4e5ba9d"), quantity: 1 }
     ],
     totalAmount: NumberDecimal("240.00"),
     status: "pending",
     orderDate: new Date()
   },
   {
-    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    customerId: ObjectId("67deba70de73e442d4e5bab3"), // Замените на действительный ID покупателя
     products: [
-      { productId: ObjectId(""), quantity: 1 }
+      { productId: ObjectId("67deba6fde73e442d4e5ba9d"), quantity: 1 }
     ],
     totalAmount: NumberDecimal("70.00"),
     status: "shipped",
     orderDate: new Date()
   },
   {
-    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    customerId: ObjectId("67deba70de73e442d4e5bab4"), // Замените на действительный ID покупателя
     products: [
-      { productId: ObjectId(""), quantity: 2 }
+      { productId: ObjectId("67deba6fde73e442d4e5ba9d"), quantity: 2 }
     ],
     totalAmount: NumberDecimal("180.00"),
     status: "delivered",
@@ -707,148 +709,147 @@ db.orders.insertMany([
 
 db.reviews.insertMany([
   {
-    productId: ObjectId("..."), // Вставьте действительный ID товара
-    customerId: ObjectId("..."), // Вставьте действительный ID покупателя
+    productId: ObjectId("67deba6fde73e442d4e5ba8d"), // Вставьте действительный ID товара
+    customerId: ObjectId("67deba70de73e442d4e5baa1"), // Вставьте действительный ID покупателя
     rating: 5,
     comment: "Excellent product!",
     reviewDate: new Date()
   },
   {
-    productId: ObjectId("..."), // Вставьте действительный ID товара
-    customerId: ObjectId("..."), // Вставьте действительный ID покупателя
+    productId: ObjectId("67deba6fde73e442d4e5ba8d"), // Вставьте действительный ID товара
+    customerId: ObjectId("67deba70de73e442d4e5baa2"), // Вставьте действительный ID покупателя
     rating: 4,
     comment: "Good, but could be better.",
     reviewDate: new Date()
   },
   {
-    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a8c"), // Замените на действительный ID товара
-    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7a8b"), // Замените на действительный ID покупателя
+    productId: ObjectId("67deba6fde73e442d4e5ba8e"), // Замените на действительный ID товара
+    customerId: ObjectId("67deba70de73e442d4e5baa3"), // Замените на действительный ID покупателя
     rating: 5,
     comment: "Excellent product!",
     reviewDate: new Date()
   },
   {
-    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a8d"), // Замените на действительный ID товара
-    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7a8e"), // Замените на действительный ID покупателя
+    productId: ObjectId("67deba6fde73e442d4e5ba8f"), // Замените на действительный ID товара
+    customerId: ObjectId("67deba70de73e442d4e5baa1"), // Замените на действительный ID покупателя
     rating: 4,
     comment: "Good, but could be better.",
     reviewDate: new Date()
   },
   {
-    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a8f"), // Замените на действительный ID товара
-    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7a90"), // Замените на действительный ID покупателя
+    productId: ObjectId("67deba6fde73e442d4e5ba8f"), // Замените на действительный ID товара
+    customerId: ObjectId("67deba70de73e442d4e5baa1"), // Замените на действительный ID покупателя
     rating: 3,
     comment: "Average product.",
     reviewDate: new Date()
   },
   {
-    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a91"), // Замените на действительный ID товара
-    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7a93"), // Замените на действительный ID покупателя
+    productId: ObjectId("67deba6fde73e442d4e5ba90"), // Замените на действительный ID товара
+    customerId: ObjectId("67deba70de73e442d4e5baab"), // Замените на действительный ID покупателя
     rating: 5,
     comment: "Absolutely love it!",
     reviewDate: new Date()
   },
   {
-    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a92"), // Замените на действительный ID товара
-    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7a95"), // Замените на действительный ID покупателя
+    productId: ObjectId("67deba6fde73e442d4e5ba90"), // Замените на действительный ID товара
+    customerId: ObjectId("67deba70de73e442d4e5baab"), // Замените на действительный ID покупателя
     rating: 2,
     comment: "Not worth the price.",
     reviewDate: new Date()
   },
   {
-    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a94"), // Замените на действительный ID товара
-    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7a98"), // Замените на действительный ID покупателя
+    productId: ObjectId("67deba6fde73e442d4e5ba91"), // Замените на действительный ID товара
+    customerId: ObjectId("67deba70de73e442d4e5baac"), // Замените на действительный ID покупателя
     rating: 4,
     comment: "Very good quality.",
     reviewDate: new Date()
   },
   {
-    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a96"), // Замените на действительный ID товара
-    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7a9a"), // Замените на действительный ID покупателя
+    productId: ObjectId("67deba6fde73e442d4e5ba91"), // Замените на действительный ID товара
+    customerId: ObjectId("67deba70de73e442d4e5baac"), // Замените на действительный ID покупателя
     rating: 5,
     comment: "Perfect for my needs.",
     reviewDate: new Date()
   },
   {
-    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a97"), // Замените на действительный ID товара
-    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7a9d"), // Замените на действительный ID покупателя
+    productId: ObjectId("67deba6fde73e442d4e5ba91"), // Замените на действительный ID товара
+    customerId: ObjectId("67deba70de73e442d4e5bab0"), // Замените на действительный ID покупателя
     rating: 3,
     comment: "It's okay, but not great.",
     reviewDate: new Date()
   },
   {
-    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a99"), // Замените на действительный ID товара
-    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7a9f"), // Замените на действительный ID покупателя
+    productId: ObjectId("67deba6fde73e442d4e5ba92"), // Замените на действительный ID товара
+    customerId: ObjectId("67deba70de73e442d4e5bab0"), // Замените на действительный ID покупателя
     rating: 4,
     comment: "Very satisfied with the purchase.",
     reviewDate: new Date()
   },
   {
-    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a9b"), // Замените на действительный ID товара
-    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7aa1"), // Замените на действительный ID покупателя
+    productId: ObjectId("67deba6fde73e442d4e5ba93"), // Замените на действительный ID товара
+    customerId: ObjectId("67deba70de73e442d4e5bab1"), // Замените на действительный ID покупателя
     rating: 5,
     comment: "Best product I've ever bought!",
     reviewDate: new Date()
   },
   {
-    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a9c"), // Замените на действительный ID товара
-    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7aa4"), // Замените на действительный ID покупателя
+    productId: ObjectId("67deba6fde73e442d4e5ba94"), // Замените на действительный ID товара
+    customerId: ObjectId("67deba70de73e442d4e5bab1"), // Замените на действительный ID покупателя
     rating: 1,
     comment: "Terrible experience.",
     reviewDate: new Date()
   },
   {
-    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a9e"), // Замените на действительный ID товара
-    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7aa6"), // Замените на действительный ID покупателя
+    productId: ObjectId("67deba6fde73e442d4e5ba94"), // Замените на действительный ID товара
+    customerId: ObjectId("67deba70de73e442d4e5bab3"), // Замените на действительный ID покупателя
     rating: 4,
     comment: "Great value for money.",
     reviewDate: new Date()
   },
   {
-    productId: ObjectId("615f1d2e1a2b3c4d5e6f7aa0"), // Замените на действительный ID товара
-    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7aa8"), // Замените на действительный ID покупателя
+    productId: ObjectId("67deba6fde73e442d4e5ba95"), // Замените на действительный ID товара
+    customerId: ObjectId("67deba70de73e442d4e5bab3"), // Замените на действительный ID покупателя
     rating: 5,
     comment: "Highly recommended!",
     reviewDate: new Date()
   },
   {
-    productId: ObjectId("615f1d2e1a2b3c4d5e6f7aa2"), // Замените на действительный ID товара
-    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7aab"), // Замените на действительный ID покупателя
+    productId: ObjectId("67deba6fde73e442d4e5ba95"), // Замените на действительный ID товара
+    customerId: ObjectId("67deba70de73e442d4e5bab2"), // Замените на действительный ID покупателя
     rating: 3,
     comment: "Decent, but not outstanding.",
     reviewDate: new Date()
   },
   {
-    productId: ObjectId("615f1d2e1a2b3c4d5e6f7aa3"), // Замените на действительный ID товара
-    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7aad"), // Замените на действительный ID покупателя
+    productId: ObjectId("67deba6fde73e442d4e5ba95"), // Замените на действительный ID товара
+    customerId: ObjectId("67deba70de73e442d4e5bab2"), // Замените на действительный ID покупателя
     rating: 4,
     comment: "Very good, but could improve.",
     reviewDate: new Date()
   },
   {
-    productId: ObjectId("615f1d2e1a2b3c4d5e6f7aa5"), // Замените на действительный ID товара
-    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7aaf"), // Замените на действительный ID покупателя
+    productId: ObjectId("67deba6fde73e442d4e5ba95"), // Замените на действительный ID товара
+    customerId: ObjectId("67deba70de73e442d4e5bab0"), // Замените на действительный ID покупателя
     rating: 5,
     comment: "Amazing product!",
     reviewDate: new Date()
   },
   {
-    productId: ObjectId("615f1d2e1a2b3c4d5e6f7aa7"), // Замените на действительный ID товара
-    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7ab2"), // Замените на действительный ID покупателя
+    productId: ObjectId("67deba6fde73e442d4e5ba96"), // Замените на действительный ID товара
+    customerId: ObjectId("67deba70de73e442d4e5bab0"), // Замените на действительный ID покупателя
     rating: 2,
     comment: "Disappointed with the quality.",
     reviewDate: new Date()
   },
   {
-    productId: ObjectId("615f1d2e1a2b3c4d5e6f7aa9"), // Замените на действительный ID товара
-    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7ab4"), // Замените на действительный ID покупателя
+    productId: ObjectId("67deba6fde73e442d4e5ba96"), // Замените на действительный ID товара
+    customerId: ObjectId("67deba70de73e442d4e5bab4"), // Замените на действительный ID покупателя
     rating: 4,
     comment: "Very good, but a bit pricey.",
     reviewDate: new Date()
   }
 ]);
-
-- а. Создание нового продукта с несколькими вариантами
+- - а. Создание нового продукта с несколькими вариантами
 
 db.products.insertOne({
   name: "Tablet",
@@ -861,19 +862,21 @@ db.products.insertOne({
     { color: "Black", storage: "128GB", price: NumberDecimal("600.00") }
   ]
 });
-
 б. Обновление цены конкретного варианта продукта
+db.products.find({"name": "Laptop", "variants.color": "Black" }).pretty()
 
 db.products.updateOne(
   { name: "Laptop", "variants.color": "Black" },
-  { $set: { "variants.$.price": NumberDecimal("1150.00") } }
+  { $set: { "variants.$.price": NumberDecimal("1500.00") } }
 );
+
+db.products.find({"name": "Laptop", "variants.color": "Black" }).pretty()
 
 в. Добавление нового отзыва для продукта
 
 db.reviews.insertOne({
   productId: ObjectId("..."), // Вставьте действительный ID товара
-  customerId: ObjectId("..."), // Вставьте действительный ID покупателя
+  customerId: ObjectId("67deba70de73e442d4e5bab3"), // Вставьте действительный ID покупателя
   rating: 4,
   comment: "Great product, but a bit expensive.",
   reviewDate: new Date()
@@ -885,13 +888,12 @@ db.products.deleteOne({ name: "Cancelled Product" });
 
 е. Поиск всех заказов для конкретного клиента
 
-const customerId = ObjectId("67d55f32ce0b442ce939e4ef"); // Вставьте действительный ID покупателя
+const customerId = ObjectId("67deba70de73e442d4e5baa1"); // Вставьте действительный ID покупателя
 db.orders.find({ customerId: customerId });
 
 ф. Обновление статуса заказа
-
 db.orders.updateOne(
-  { _id: ObjectId("...") }, // Вставьте действительный ID заказа
+  { _id: ObjectId("67deecd1de73e442d4e5bab8") }, // Вставьте действительный ID заказа
   { $set: { status: "delivered" } }
 );
 
@@ -900,80 +902,66 @@ db.orders.updateOne(
 
 db.products.find({
   variants: {
-    $elemMatch: { color: "Black", price: { $gt: NumberDecimal("1000.00") } }
+    $elemMatch: { color: "Black", price: { $gt: NumberDecimal("500.00") } }
   }
 });
 
-Запрос 2: Использование $all
+апрос 2: Использование $all
 Найти все заказы, которые содержат определенные товары (по их ID).
 
 
-const productIds = [ObjectId("..."), ObjectId("...")]; // Вставьте действительные ID товаров
+const productIds = [ObjectId("67deba6fde73e442d4e5ba8d"), ObjectId("67deba6fde73e442d4e5ba8e")]; // Вставьте действительные ID товаров
 db.orders.find({
   "products.productId": { $all: productIds }
 });
-
 
 Часть 3: Индексация и производительность
 1. Создание индексов
 Для оптимизации производительности запросов создадим индексы на часто используемых полях.
 
-Индексы для коллекции products
-Индекс на поле name:
 
-javascript
-Copy
 db.products.createIndex({ name: 1 });
+
 Индекс на поле category:
 
-javascript
-Copy
 db.products.createIndex({ category: 1 });
+
 Составной индекс на name и category:
 
-javascript
-Copy
 db.products.createIndex({ name: 1, category: 1 });
 Индексы для коллекции customers
 Индекс на поле email (уникальный):
 
-javascript
-Copy
+
 db.customers.createIndex({ email: 1 }, { unique: true });
 Индексы для коллекции orders
 Индекс на поле customerId:
 
-javascript
-Copy
 db.orders.createIndex({ customerId: 1 });
 Индекс на поле status:
 
-javascript
-Copy
+
 db.orders.createIndex({ status: 1 });
 Индексы для коллекции reviews
 Индекс на поле productId:
 
-javascript
-Copy
+
 db.reviews.createIndex({ productId: 1 });
 Индекс на поле rating:
 
-javascript
-Copy
 db.reviews.createIndex({ rating: 1 });
+
+
 2. Анализ производительности с использованием explain()
 Запрос 1: Поиск продуктов по категории
 Запрос:
 
-javascript
-Copy
 db.products.find({ category: "Electronics" }).explain("executionStats");
+
 Без индекса: Проверьте executionStats.totalDocsExamined и executionStats.executionTimeMillis.
 
-С индексом: Создайте индекс на поле category и выполните запрос снова. Сравните показатели.
 
-Запрос 2: Поиск заказов по статусу
+апрос 2: Поиск заказов по статусу
 Запрос:
 
 javascript
@@ -982,6 +970,8 @@ db.orders.find({ status: "pending" }).explain("executionStats");
 Без индекса: Проверьте executionStats.totalDocsExamined и executionStats.executionTimeMillis.
 
 С индексом: Создайте индекс на поле status и выполните запрос снова. Сравните показатели.
+
+
 
 3. Текстовый индекс и поиск
 Создание текстового индекса
@@ -996,34 +986,13 @@ db.products.createIndex({ name: "text", description: "text" });
 javascript
 Copy
 db.products.find({ $text: { $search: "laptop" } });
-Пример результата
-javascript
-Copy
-[
-  {
-    _id: ObjectId("..."),
-    name: "Laptop",
-    price: NumberDecimal("1200.50"),
-    category: "Electronics",
-    stock: 10,
-    description: "A high-performance laptop."
-  },
-  {
-    _id: ObjectId("..."),
-    name: "Gaming Laptop",
-    price: NumberDecimal("1500.00"),
-    category: "Electronics",
-    stock: 5,
-    description: "A powerful laptop for gaming."
-  }
-]
+
 
 Часть 4: Пайплайн агрегации
 1. Общий доход по категориям
 Рассчитаем общий доход для каждой категории товаров.
 
-javascript
-Copy
+
 db.orders.aggregate([
   {
     $unwind: "$products" // Разворачиваем массив продуктов
@@ -1052,8 +1021,7 @@ db.orders.aggregate([
 2. Топ-5 клиентов по объему затрат
 Найдем 5 клиентов, которые потратили больше всего.
 
-javascript
-Copy
+
 db.orders.aggregate([
   {
     $group: { // Группируем по ID клиента
@@ -1089,8 +1057,7 @@ db.orders.aggregate([
 3. Средний рейтинг и количество отзывов для каждого продукта
 Рассчитаем средний рейтинг и количество отзывов для каждого продукта.
 
-javascript
-Copy
+
 db.reviews.aggregate([
   {
     $group: { // Группируем по ID продукта
@@ -1155,8 +1122,8 @@ db.orders.aggregate([
     }
   }
 ]);
-Часть 5: Программирование данных и взаимосвязи
-1. Реализация связи многие-ко-многим между продуктами и категориями
+
+. Реализация связи многие-ко-многим между продуктами и категориями
 В MongoDB связи многие-ко-многим можно реализовать с помощью массива ссылок. Например, продукт может принадлежать нескольким категориям, а категория может содержать несколько продуктов.
 
 Пример схемы для связи многие-ко-многим
