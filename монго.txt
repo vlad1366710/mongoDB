@@ -1,0 +1,1184 @@
+use ecommerce_db
+
+db.createCollection("products", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["name", "price", "category", "stock"],
+      properties: {
+        name: {
+          bsonType: "string",
+          description: "Название товара (обязательное поле)"
+        },
+        price: {
+          bsonType: "decimal",
+          description: "Цена товара (обязательное поле)"
+        },
+        category: {
+          bsonType: "string",
+          description: "Категория товара (обязательное поле)"
+        },
+        stock: {
+          bsonType: "int",
+          description: "Количество товара на складе (обязательное поле)"
+        },
+        description: {
+          bsonType: "string",
+          description: "Описание товара (необязательное поле)"
+        }
+      }
+    }
+  }
+});
+
+db.createCollection("customers", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["firstName", "lastName", "email"],
+      properties: {
+        firstName: {
+          bsonType: "string",
+          description: "Имя покупателя (обязательное поле)"
+        },
+        lastName: {
+          bsonType: "string",
+          description: "Фамилия покупателя (обязательное поле)"
+        },
+        email: {
+          bsonType: "string",
+          pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+          description: "Электронная почта покупателя (обязательное поле)"
+        },
+        address: {
+          bsonType: "string",
+          description: "Адрес покупателя (необязательное поле)"
+        },
+        phone: {
+          bsonType: "string",
+          description: "Телефон покупателя (необязательное поле)"
+        }
+      }
+    }
+  }
+});
+
+db.createCollection("orders", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["customerId", "products", "totalAmount", "status"],
+      properties: {
+        customerId: {
+          bsonType: "objectId",
+          description: "ID покупателя (обязательное поле)"
+        },
+        products: {
+          bsonType: "array",
+          description: "Список товаров в заказе (обязательное поле)",
+          items: {
+            bsonType: "object",
+            required: ["productId", "quantity"],
+            properties: {
+              productId: {
+                bsonType: "objectId",
+                description: "ID товара (обязательное поле)"
+              },
+              quantity: {
+                bsonType: "int",
+                description: "Количество товара (обязательное поле)"
+              }
+            }
+          }
+        },
+        totalAmount: {
+          bsonType: "decimal",
+          description: "Общая сумма заказа (обязательное поле)"
+        },
+        status: {
+          bsonType: "string",
+          enum: ["pending", "shipped", "delivered", "cancelled"],
+          description: "Статус заказа (обязательное поле)"
+        },
+        orderDate: {
+          bsonType: "date",
+          description: "Дата заказа (необязательное поле)"
+        }
+      }
+    }
+  }
+});
+
+db.createCollection("reviews", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["productId", "customerId", "rating", "comment"],
+      properties: {
+        productId: {
+          bsonType: "objectId",
+          description: "ID товара (обязательное поле)"
+        },
+        customerId: {
+          bsonType: "objectId",
+          description: "ID покупателя (обязательное поле)"
+        },
+        rating: {
+          bsonType: "int",
+          minimum: 1,
+          maximum: 5,
+          description: "Рейтинг товара (обязательное поле)"
+        },
+        comment: {
+          bsonType: "string",
+          description: "Комментарий к отзыву (обязательное поле)"
+        },
+        reviewDate: {
+          bsonType: "date",
+          description: "Дата отзыва (необязательное поле)"
+        }
+      }
+    }
+  }
+});
+
+show collections
+
+db.products.insertMany([
+  {
+    name: "Tablet",
+    price: NumberDecimal("450.75"),
+    category: "Electronics",
+    stock: 15,
+    description: "A versatile tablet for work and play.",
+    variants: [
+      { color: "White", size: "10 inch", price: NumberDecimal("450.75") },
+      { color: "Space Gray", size: "12 inch", price: NumberDecimal("550.00") }
+    ]
+  },
+  {
+    name: "Wireless Earbuds",
+    price: NumberDecimal("150.00"),
+    category: "Electronics",
+    stock: 30,
+    description: "Noise-cancelling wireless earbuds.",
+    variants: [
+      { color: "Black", price: NumberDecimal("150.00") },
+      { color: "White", price: NumberDecimal("150.00") }
+    ]
+  },
+  {
+    name: "Smart Watch",
+    price: NumberDecimal("250.00"),
+    category: "Electronics",
+    stock: 25,
+    description: "A smartwatch with health tracking features.",
+    variants: [
+      { color: "Black", size: "42mm", price: NumberDecimal("250.00") },
+      { color: "Silver", size: "44mm", price: NumberDecimal("270.00") }
+    ]
+  },
+  {
+    name: "Gaming Mouse",
+    price: NumberDecimal("70.00"),
+    category: "Electronics",
+    stock: 40,
+    description: "High-precision gaming mouse.",
+    variants: [
+      { color: "Black", price: NumberDecimal("70.00") },
+      { color: "RGB", price: NumberDecimal("80.00") }
+    ]
+  },
+  {
+    name: "Bluetooth Speaker",
+    price: NumberDecimal("90.00"),
+    category: "Electronics",
+    stock: 50,
+    description: "Portable Bluetooth speaker with great sound.",
+    variants: [
+      { color: "Black", price: NumberDecimal("90.00") },
+      { color: "Red", price: NumberDecimal("95.00") }
+    ]
+  },
+  {
+    name: "4K Monitor",
+    price: NumberDecimal("400.00"),
+    category: "Electronics",
+    stock: 12,
+    description: "27-inch 4K monitor for professionals.",
+    variants: [
+      { color: "Black", size: "27 inch", price: NumberDecimal("400.00") },
+      { color: "Silver", size: "32 inch", price: NumberDecimal("500.00") }
+    ]
+  },
+  {
+    name: "External Hard Drive",
+    price: NumberDecimal("120.00"),
+    category: "Electronics",
+    stock: 35,
+    description: "1TB external hard drive for extra storage.",
+    variants: [
+      { color: "Black", storage: "1TB", price: NumberDecimal("120.00") },
+      { color: "Blue", storage: "2TB", price: NumberDecimal("150.00") }
+    ]
+  },
+  {
+    name: "Mechanical Keyboard",
+    price: NumberDecimal("110.00"),
+    category: "Electronics",
+    stock: 20,
+    description: "Mechanical keyboard with RGB lighting.",
+    variants: [
+      { color: "Black", switch: "Red", price: NumberDecimal("110.00") },
+      { color: "White", switch: "Blue", price: NumberDecimal("120.00") }
+    ]
+  },
+  {
+    name: "Desk Lamp",
+    price: NumberDecimal("45.00"),
+    category: "Home",
+    stock: 60,
+    description: "Adjustable LED desk lamp.",
+    variants: [
+      { color: "Black", price: NumberDecimal("45.00") },
+      { color: "White", price: NumberDecimal("45.00") }
+    ]
+  },
+  {
+    name: "Coffee Maker",
+    price: NumberDecimal("85.00"),
+    category: "Home",
+    stock: 18,
+    description: "Automatic coffee maker with timer.",
+    variants: [
+      { color: "Black", price: NumberDecimal("85.00") },
+      { color: "Stainless Steel", price: NumberDecimal("95.00") }
+    ]
+  },
+  {
+    name: "Air Purifier",
+    price: NumberDecimal("200.00"),
+    category: "Home",
+    stock: 10,
+    description: "HEPA air purifier for clean air.",
+    variants: [
+      { color: "White", price: NumberDecimal("200.00") },
+      { color: "Black", price: NumberDecimal("210.00") }
+    ]
+  },
+  {
+    name: "Electric Kettle",
+    price: NumberDecimal("50.00"),
+    category: "Home",
+    stock: 25,
+    description: "Fast-boiling electric kettle.",
+    variants: [
+      { color: "White", price: NumberDecimal("50.00") },
+      { color: "Black", price: NumberDecimal("55.00") }
+    ]
+  },
+  {
+    name: "Yoga Mat",
+    price: NumberDecimal("30.00"),
+    category: "Fitness",
+    stock: 100,
+    description: "Eco-friendly yoga mat.",
+    variants: [
+      { color: "Blue", price: NumberDecimal("30.00") },
+      { color: "Purple", price: NumberDecimal("30.00") }
+    ]
+  },
+  {
+    name: "Dumbbell Set",
+    price: NumberDecimal("120.00"),
+    category: "Fitness",
+    stock: 15,
+    description: "Adjustable dumbbell set for home workouts.",
+    variants: [
+      { color: "Black", weight: "20kg", price: NumberDecimal("120.00") },
+      { color: "Gray", weight: "30kg", price: NumberDecimal("150.00") }
+    ]
+  },
+  {
+    name: "Running Shoes",
+    price: NumberDecimal("90.00"),
+    category: "Fitness",
+    stock: 40,
+    description: "Lightweight running shoes for all terrains.",
+    variants: [
+      { color: "Black", size: "42", price: NumberDecimal("90.00") },
+      { color: "Blue", size: "44", price: NumberDecimal("90.00") }
+    ]
+  },
+  {
+    name: "Backpack",
+    price: NumberDecimal("60.00"),
+    category: "Accessories",
+    stock: 50,
+    description: "Durable backpack for everyday use.",
+    variants: [
+      { color: "Black", price: NumberDecimal("60.00") },
+      { color: "Gray", price: NumberDecimal("60.00") }
+    ]
+  },
+  {
+    name: "Sunglasses",
+    price: NumberDecimal("70.00"),
+    category: "Accessories",
+    stock: 30,
+    description: "Polarized sunglasses for UV protection.",
+    variants: [
+      { color: "Black", price: NumberDecimal("70.00") },
+      { color: "Brown", price: NumberDecimal("70.00") }
+    ]
+  },
+  {
+    name: "Water Bottle",
+    price: NumberDecimal("20.00"),
+    category: "Accessories",
+    stock: 80,
+    description: "Insulated stainless steel water bottle.",
+    variants: [
+      { color: "Silver", price: NumberDecimal("20.00") },
+      { color: "Black", price: NumberDecimal("20.00") }
+    ]
+  }
+]);
+
+db.products.insertMany([
+  {
+    name: "Laptop",
+    price: NumberDecimal("1200.50"),
+    category: "Electronics",
+    stock: 10,
+    description: "A high-performance laptop.",
+    variants: [
+      { color: "Silver", size: "15 inch", price: NumberDecimal("1200.50") },
+      { color: "Black", size: "13 inch", price: NumberDecimal("1100.00") }
+    ]
+  },
+  {
+    name: "Smartphone",
+    price: NumberDecimal("800.00"),
+    category: "Electronics",
+    stock: 20,
+    description: "Latest model with advanced features.",
+    variants: [
+      { color: "Blue", storage: "128GB", price: NumberDecimal("800.00") },
+      { color: "Black", storage: "256GB", price: NumberDecimal("900.00") }
+    ]
+  },
+
+]);
+
+db.customers.insertMany([
+  {
+    firstName: "John",
+    lastName: "Doe",
+    email: "john.doe@example.com",
+    address: "123 Main St",
+    phone: "+1234567890"
+  },
+  {
+    firstName: "Jane",
+    lastName: "Smith",
+    email: "jane.smith@example.com",
+    address: "456 Elm St",
+    phone: "+0987654321"
+  },
+  {
+    firstName: "Alice",
+    lastName: "Johnson",
+    email: "alice.johnson@example.com",
+    address: "789 Oak St",
+    phone: "+1122334455"
+  },
+  {
+    firstName: "Bob",
+    lastName: "Williams",
+    email: "bob.williams@example.com",
+    address: "321 Pine St",
+    phone: "+9988776655"
+  },
+  {
+    firstName: "Charlie",
+    lastName: "Brown",
+    email: "charlie.brown@example.com",
+    address: "654 Maple St",
+    phone: "+5544332211"
+  },
+  {
+    firstName: "David",
+    lastName: "Jones",
+    email: "david.jones@example.com",
+    address: "987 Cedar St",
+    phone: "+6677889900"
+  },
+  {
+    firstName: "Eva",
+    lastName: "Garcia",
+    email: "eva.garcia@example.com",
+    address: "135 Birch St",
+    phone: "+3344556677"
+  },
+  {
+    firstName: "Frank",
+    lastName: "Martinez",
+    email: "frank.martinez@example.com",
+    address: "246 Walnut St",
+    phone: "+7788990011"
+  },
+  {
+    firstName: "Grace",
+    lastName: "Lee",
+    email: "grace.lee@example.com",
+    address: "369 Spruce St",
+    phone: "+9900112233"
+  },
+  {
+    firstName: "Henry",
+    lastName: "Taylor",
+    email: "henry.taylor@example.com",
+    address: "482 Cherry St",
+    phone: "+4455667788"
+  },
+  {
+    firstName: "Ivy",
+    lastName: "Anderson",
+    email: "ivy.anderson@example.com",
+    address: "573 Willow St",
+    phone: "+2233445566"
+  },
+  {
+    firstName: "Jack",
+    lastName: "Thomas",
+    email: "jack.thomas@example.com",
+    address: "684 Ash St",
+    phone: "+1122334455"
+  },
+  {
+    firstName: "Karen",
+    lastName: "Hernandez",
+    email: "karen.hernandez@example.com",
+    address: "795 Poplar St",
+    phone: "+9988776655"
+  },
+  {
+    firstName: "Leo",
+    lastName: "Moore",
+    email: "leo.moore@example.com",
+    address: "806 Fir St",
+    phone: "+5544332211"
+  },
+  {
+    firstName: "Mia",
+    lastName: "Clark",
+    email: "mia.clark@example.com",
+    address: "917 Redwood St",
+    phone: "+6677889900"
+  },
+  {
+    firstName: "Nathan",
+    lastName: "Lewis",
+    email: "nathan.lewis@example.com",
+    address: "1028 Sequoia St",
+    phone: "+3344556677"
+  },
+  {
+    firstName: "Olivia",
+    lastName: "Walker",
+    email: "olivia.walker@example.com",
+    address: "1139 Cypress St",
+    phone: "+7788990011"
+  },
+  {
+    firstName: "Peter",
+    lastName: "Hall",
+    email: "peter.hall@example.com",
+    address: "1240 Palm St",
+    phone: "+9900112233"
+  },
+  {
+    firstName: "Quinn",
+    lastName: "Young",
+    email: "quinn.young@example.com",
+    address: "1351 Olive St",
+    phone: "+4455667788"
+  },
+  {
+    firstName: "Rachel",
+    lastName: "Allen",
+    email: "rachel.allen@example.com",
+    address: "1462 Magnolia St",
+    phone: "+2233445566"
+  }
+]);
+
+db.orders.insertMany([
+  {
+    customerId: ObjectId("..."), // Вставьте действительный ID покупателя
+    products: [
+      { productId: ObjectId("..."), quantity: 1 }, // Вставьте действительный ID товара
+      { productId: ObjectId("..."), quantity: 2 }
+    ],
+    totalAmount: NumberDecimal("2000.50"),
+    status: "pending",
+    orderDate: new Date()
+  },
+  {
+    customerId: ObjectId("..."), // Вставьте действительный ID покупателя
+    products: [
+      { productId: ObjectId("..."), quantity: 1 }
+    ],
+    totalAmount: NumberDecimal("800.00"),
+    status: "shipped",
+    orderDate: new Date()
+  },
+  {
+    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    products: [
+      { productId: ObjectId(""), quantity: 1 }, // Замените на действительный ID товара
+      { productId: ObjectId(""), quantity: 2 }
+    ],
+    totalAmount: NumberDecimal("2000.50"),
+    status: "pending",
+    orderDate: new Date()
+  },
+  {
+    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    products: [
+      { productId: ObjectId(""), quantity: 1 }
+    ],
+    totalAmount: NumberDecimal("800.00"),
+    status: "shipped",
+    orderDate: new Date()
+  },
+  {
+    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    products: [
+      { productId: ObjectId(""), quantity: 3 },
+      { productId: ObjectId(""), quantity: 1 }
+    ],
+    totalAmount: NumberDecimal("450.75"),
+    status: "delivered",
+    orderDate: new Date()
+  },
+  {
+    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    products: [
+      { productId: ObjectId(""), quantity: 2 }
+    ],
+    totalAmount: NumberDecimal("300.00"),
+    status: "pending",
+    orderDate: new Date()
+  },
+  {
+    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    products: [
+      { productId: ObjectId(""), quantity: 1 },
+      { productId: ObjectId(""), quantity: 1 }
+    ],
+    totalAmount: NumberDecimal("340.00"),
+    status: "shipped",
+    orderDate: new Date()
+  },
+  {
+    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    products: [
+      { productId: ObjectId(""), quantity: 4 }
+    ],
+    totalAmount: NumberDecimal("180.00"),
+    status: "delivered",
+    orderDate: new Date()
+  },
+  {
+    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    products: [
+      { productId: ObjectId(""), quantity: 2 },
+      { productId: ObjectId(""), quantity: 1 }
+    ],
+    totalAmount: NumberDecimal("500.00"),
+    status: "pending",
+    orderDate: new Date()
+  },
+  {
+    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    products: [
+      { productId: ObjectId(""), quantity: 1 }
+    ],
+    totalAmount: NumberDecimal("250.00"),
+    status: "shipped",
+    orderDate: new Date()
+  },
+  {
+    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    products: [
+      { productId: ObjectId(""), quantity: 3 }
+    ],
+    totalAmount: NumberDecimal("270.00"),
+    status: "delivered",
+    orderDate: new Date()
+  },
+  {
+    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    products: [
+      { productId: ObjectId(""), quantity: 1 },
+      { productId: ObjectId(""), quantity: 2 }
+    ],
+    totalAmount: NumberDecimal("360.00"),
+    status: "pending",
+    orderDate: new Date()
+  },
+  {
+    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    products: [
+      { productId: ObjectId(""), quantity: 1 }
+    ],
+    totalAmount: NumberDecimal("90.00"),
+    status: "shipped",
+    orderDate: new Date()
+  },
+  {
+    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    products: [
+      { productId: ObjectId(""), quantity: 2 }
+    ],
+    totalAmount: NumberDecimal("180.00"),
+    status: "delivered",
+    orderDate: new Date()
+  },
+  {
+    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    products: [
+      { productId: ObjectId(""), quantity: 1 },
+      { productId: ObjectId(""), quantity: 1 }
+    ],
+    totalAmount: NumberDecimal("140.00"),
+    status: "pending",
+    orderDate: new Date()
+  },
+  {
+    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    products: [
+      { productId: ObjectId(""), quantity: 3 }
+    ],
+    totalAmount: NumberDecimal("330.00"),
+    status: "shipped",
+    orderDate: new Date()
+  },
+  {
+    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    products: [
+      { productId: ObjectId(""), quantity: 1 }
+    ],
+    totalAmount: NumberDecimal("120.00"),
+    status: "delivered",
+    orderDate: new Date()
+  },
+  {
+    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    products: [
+      { productId: ObjectId(""), quantity: 2 },
+      { productId: ObjectId(""), quantity: 1 }
+    ],
+    totalAmount: NumberDecimal("240.00"),
+    status: "pending",
+    orderDate: new Date()
+  },
+  {
+    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    products: [
+      { productId: ObjectId(""), quantity: 1 }
+    ],
+    totalAmount: NumberDecimal("70.00"),
+    status: "shipped",
+    orderDate: new Date()
+  },
+  {
+    customerId: ObjectId(""), // Замените на действительный ID покупателя
+    products: [
+      { productId: ObjectId(""), quantity: 2 }
+    ],
+    totalAmount: NumberDecimal("180.00"),
+    status: "delivered",
+    orderDate: new Date()
+  }
+]);
+
+db.reviews.insertMany([
+  {
+    productId: ObjectId("..."), // Вставьте действительный ID товара
+    customerId: ObjectId("..."), // Вставьте действительный ID покупателя
+    rating: 5,
+    comment: "Excellent product!",
+    reviewDate: new Date()
+  },
+  {
+    productId: ObjectId("..."), // Вставьте действительный ID товара
+    customerId: ObjectId("..."), // Вставьте действительный ID покупателя
+    rating: 4,
+    comment: "Good, but could be better.",
+    reviewDate: new Date()
+  },
+  {
+    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a8c"), // Замените на действительный ID товара
+    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7a8b"), // Замените на действительный ID покупателя
+    rating: 5,
+    comment: "Excellent product!",
+    reviewDate: new Date()
+  },
+  {
+    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a8d"), // Замените на действительный ID товара
+    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7a8e"), // Замените на действительный ID покупателя
+    rating: 4,
+    comment: "Good, but could be better.",
+    reviewDate: new Date()
+  },
+  {
+    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a8f"), // Замените на действительный ID товара
+    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7a90"), // Замените на действительный ID покупателя
+    rating: 3,
+    comment: "Average product.",
+    reviewDate: new Date()
+  },
+  {
+    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a91"), // Замените на действительный ID товара
+    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7a93"), // Замените на действительный ID покупателя
+    rating: 5,
+    comment: "Absolutely love it!",
+    reviewDate: new Date()
+  },
+  {
+    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a92"), // Замените на действительный ID товара
+    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7a95"), // Замените на действительный ID покупателя
+    rating: 2,
+    comment: "Not worth the price.",
+    reviewDate: new Date()
+  },
+  {
+    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a94"), // Замените на действительный ID товара
+    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7a98"), // Замените на действительный ID покупателя
+    rating: 4,
+    comment: "Very good quality.",
+    reviewDate: new Date()
+  },
+  {
+    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a96"), // Замените на действительный ID товара
+    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7a9a"), // Замените на действительный ID покупателя
+    rating: 5,
+    comment: "Perfect for my needs.",
+    reviewDate: new Date()
+  },
+  {
+    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a97"), // Замените на действительный ID товара
+    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7a9d"), // Замените на действительный ID покупателя
+    rating: 3,
+    comment: "It's okay, but not great.",
+    reviewDate: new Date()
+  },
+  {
+    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a99"), // Замените на действительный ID товара
+    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7a9f"), // Замените на действительный ID покупателя
+    rating: 4,
+    comment: "Very satisfied with the purchase.",
+    reviewDate: new Date()
+  },
+  {
+    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a9b"), // Замените на действительный ID товара
+    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7aa1"), // Замените на действительный ID покупателя
+    rating: 5,
+    comment: "Best product I've ever bought!",
+    reviewDate: new Date()
+  },
+  {
+    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a9c"), // Замените на действительный ID товара
+    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7aa4"), // Замените на действительный ID покупателя
+    rating: 1,
+    comment: "Terrible experience.",
+    reviewDate: new Date()
+  },
+  {
+    productId: ObjectId("615f1d2e1a2b3c4d5e6f7a9e"), // Замените на действительный ID товара
+    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7aa6"), // Замените на действительный ID покупателя
+    rating: 4,
+    comment: "Great value for money.",
+    reviewDate: new Date()
+  },
+  {
+    productId: ObjectId("615f1d2e1a2b3c4d5e6f7aa0"), // Замените на действительный ID товара
+    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7aa8"), // Замените на действительный ID покупателя
+    rating: 5,
+    comment: "Highly recommended!",
+    reviewDate: new Date()
+  },
+  {
+    productId: ObjectId("615f1d2e1a2b3c4d5e6f7aa2"), // Замените на действительный ID товара
+    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7aab"), // Замените на действительный ID покупателя
+    rating: 3,
+    comment: "Decent, but not outstanding.",
+    reviewDate: new Date()
+  },
+  {
+    productId: ObjectId("615f1d2e1a2b3c4d5e6f7aa3"), // Замените на действительный ID товара
+    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7aad"), // Замените на действительный ID покупателя
+    rating: 4,
+    comment: "Very good, but could improve.",
+    reviewDate: new Date()
+  },
+  {
+    productId: ObjectId("615f1d2e1a2b3c4d5e6f7aa5"), // Замените на действительный ID товара
+    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7aaf"), // Замените на действительный ID покупателя
+    rating: 5,
+    comment: "Amazing product!",
+    reviewDate: new Date()
+  },
+  {
+    productId: ObjectId("615f1d2e1a2b3c4d5e6f7aa7"), // Замените на действительный ID товара
+    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7ab2"), // Замените на действительный ID покупателя
+    rating: 2,
+    comment: "Disappointed with the quality.",
+    reviewDate: new Date()
+  },
+  {
+    productId: ObjectId("615f1d2e1a2b3c4d5e6f7aa9"), // Замените на действительный ID товара
+    customerId: ObjectId("615f1d2e1a2b3c4d5e6f7ab4"), // Замените на действительный ID покупателя
+    rating: 4,
+    comment: "Very good, but a bit pricey.",
+    reviewDate: new Date()
+  }
+]);
+
+- а. Создание нового продукта с несколькими вариантами
+
+db.products.insertOne({
+  name: "Tablet",
+  price: NumberDecimal("500.00"),
+  category: "Electronics",
+  stock: 15,
+  description: "A lightweight tablet for everyday use.",
+  variants: [
+    { color: "White", storage: "64GB", price: NumberDecimal("500.00") },
+    { color: "Black", storage: "128GB", price: NumberDecimal("600.00") }
+  ]
+});
+
+б. Обновление цены конкретного варианта продукта
+
+db.products.updateOne(
+  { name: "Laptop", "variants.color": "Black" },
+  { $set: { "variants.$.price": NumberDecimal("1150.00") } }
+);
+
+в. Добавление нового отзыва для продукта
+
+db.reviews.insertOne({
+  productId: ObjectId("..."), // Вставьте действительный ID товара
+  customerId: ObjectId("..."), // Вставьте действительный ID покупателя
+  rating: 4,
+  comment: "Great product, but a bit expensive.",
+  reviewDate: new Date()
+});
+
+д. Удаление продукта, который был отменен
+
+db.products.deleteOne({ name: "Cancelled Product" });
+
+е. Поиск всех заказов для конкретного клиента
+
+const customerId = ObjectId("67d55f32ce0b442ce939e4ef"); // Вставьте действительный ID покупателя
+db.orders.find({ customerId: customerId });
+
+ф. Обновление статуса заказа
+
+db.orders.updateOne(
+  { _id: ObjectId("...") }, // Вставьте действительный ID заказа
+  { $set: { status: "delivered" } }
+);
+
+Запрос 1: Использование $elemMatch
+Найти все продукты, у которых есть вариант с цветом "Black" и ценой больше 1000.
+
+db.products.find({
+  variants: {
+    $elemMatch: { color: "Black", price: { $gt: NumberDecimal("1000.00") } }
+  }
+});
+
+Запрос 2: Использование $all
+Найти все заказы, которые содержат определенные товары (по их ID).
+
+
+const productIds = [ObjectId("..."), ObjectId("...")]; // Вставьте действительные ID товаров
+db.orders.find({
+  "products.productId": { $all: productIds }
+});
+
+
+Часть 3: Индексация и производительность
+1. Создание индексов
+Для оптимизации производительности запросов создадим индексы на часто используемых полях.
+
+Индексы для коллекции products
+Индекс на поле name:
+
+javascript
+Copy
+db.products.createIndex({ name: 1 });
+Индекс на поле category:
+
+javascript
+Copy
+db.products.createIndex({ category: 1 });
+Составной индекс на name и category:
+
+javascript
+Copy
+db.products.createIndex({ name: 1, category: 1 });
+Индексы для коллекции customers
+Индекс на поле email (уникальный):
+
+javascript
+Copy
+db.customers.createIndex({ email: 1 }, { unique: true });
+Индексы для коллекции orders
+Индекс на поле customerId:
+
+javascript
+Copy
+db.orders.createIndex({ customerId: 1 });
+Индекс на поле status:
+
+javascript
+Copy
+db.orders.createIndex({ status: 1 });
+Индексы для коллекции reviews
+Индекс на поле productId:
+
+javascript
+Copy
+db.reviews.createIndex({ productId: 1 });
+Индекс на поле rating:
+
+javascript
+Copy
+db.reviews.createIndex({ rating: 1 });
+2. Анализ производительности с использованием explain()
+Запрос 1: Поиск продуктов по категории
+Запрос:
+
+javascript
+Copy
+db.products.find({ category: "Electronics" }).explain("executionStats");
+Без индекса: Проверьте executionStats.totalDocsExamined и executionStats.executionTimeMillis.
+
+С индексом: Создайте индекс на поле category и выполните запрос снова. Сравните показатели.
+
+Запрос 2: Поиск заказов по статусу
+Запрос:
+
+javascript
+Copy
+db.orders.find({ status: "pending" }).explain("executionStats");
+Без индекса: Проверьте executionStats.totalDocsExamined и executionStats.executionTimeMillis.
+
+С индексом: Создайте индекс на поле status и выполните запрос снова. Сравните показатели.
+
+3. Текстовый индекс и поиск
+Создание текстового индекса
+Создадим текстовый индекс на полях name и description в коллекции products:
+
+javascript
+Copy
+db.products.createIndex({ name: "text", description: "text" });
+Текстовый поисковый запрос
+Найдем продукты, содержащие слово "laptop" в названии или описании:
+
+javascript
+Copy
+db.products.find({ $text: { $search: "laptop" } });
+Пример результата
+javascript
+Copy
+[
+  {
+    _id: ObjectId("..."),
+    name: "Laptop",
+    price: NumberDecimal("1200.50"),
+    category: "Electronics",
+    stock: 10,
+    description: "A high-performance laptop."
+  },
+  {
+    _id: ObjectId("..."),
+    name: "Gaming Laptop",
+    price: NumberDecimal("1500.00"),
+    category: "Electronics",
+    stock: 5,
+    description: "A powerful laptop for gaming."
+  }
+]
+
+Часть 4: Пайплайн агрегации
+1. Общий доход по категориям
+Рассчитаем общий доход для каждой категории товаров.
+
+javascript
+Copy
+db.orders.aggregate([
+  {
+    $unwind: "$products" // Разворачиваем массив продуктов
+  },
+  {
+    $lookup: { // Соединяем с коллекцией products
+      from: "products",
+      localField: "products.productId",
+      foreignField: "_id",
+      as: "productDetails"
+    }
+  },
+  {
+    $unwind: "$productDetails" // Разворачиваем результат $lookup
+  },
+  {
+    $group: { // Группируем по категории
+      _id: "$productDetails.category",
+      totalRevenue: { $sum: { $multiply: ["$products.quantity", "$productDetails.price"] } }
+    }
+  },
+  {
+    $sort: { totalRevenue: -1 } // Сортируем по убыванию дохода
+  }
+]);
+2. Топ-5 клиентов по объему затрат
+Найдем 5 клиентов, которые потратили больше всего.
+
+javascript
+Copy
+db.orders.aggregate([
+  {
+    $group: { // Группируем по ID клиента
+      _id: "$customerId",
+      totalSpent: { $sum: "$totalAmount" }
+    }
+  },
+  {
+    $sort: { totalSpent: -1 } // Сортируем по убыванию затрат
+  },
+  {
+    $limit: 5 // Ограничиваем результатом 5 клиентов
+  },
+  {
+    $lookup: { // Соединяем с коллекцией customers
+      from: "customers",
+      localField: "_id",
+      foreignField: "_id",
+      as: "customerDetails"
+    }
+  },
+  {
+    $unwind: "$customerDetails" // Разворачиваем результат $lookup
+  },
+  {
+    $project: { // Выбираем нужные поля
+      _id: 0,
+      customerName: { $concat: ["$customerDetails.firstName", " ", "$customerDetails.lastName"] },
+      totalSpent: 1
+    }
+  }
+]);
+3. Средний рейтинг и количество отзывов для каждого продукта
+Рассчитаем средний рейтинг и количество отзывов для каждого продукта.
+
+javascript
+Copy
+db.reviews.aggregate([
+  {
+    $group: { // Группируем по ID продукта
+      _id: "$productId",
+      averageRating: { $avg: "$rating" }, // Средний рейтинг
+      reviewCount: { $sum: 1 } // Количество отзывов
+    }
+  },
+  {
+    $lookup: { // Соединяем с коллекцией products
+      from: "products",
+      localField: "_id",
+      foreignField: "_id",
+      as: "productDetails"
+    }
+  },
+  {
+    $unwind: "$productDetails" // Разворачиваем результат $lookup
+  },
+  {
+    $project: { // Выбираем нужные поля
+      _id: 0,
+      productName: "$productDetails.name",
+      averageRating: 1,
+      reviewCount: 1
+    }
+  },
+  {
+    $sort: { averageRating: -1 } // Сортируем по убыванию рейтинга
+  }
+]);
+4. Отчет о месячных продажах за конкретный год
+Сгенерируем отчет о продажах по месяцам для указанного года (например, 2023).
+
+javascript
+Copy
+db.orders.aggregate([
+  {
+    $match: { // Фильтруем заказы по году
+      orderDate: {
+        $gte: ISODate("2023-01-01T00:00:00.000Z"),
+        $lt: ISODate("2024-01-01T00:00:00.000Z")
+      }
+    }
+  },
+  {
+    $group: { // Группируем по месяцу
+      _id: { $month: "$orderDate" },
+      totalSales: { $sum: "$totalAmount" },
+      orderCount: { $sum: 1 }
+    }
+  },
+  {
+    $sort: { _id: 1 } // Сортируем по месяцам
+  },
+  {
+    $project: { // Выбираем нужные поля
+      _id: 0,
+      month: "$_id",
+      totalSales: 1,
+      orderCount: 1
+    }
+  }
+]);
+Часть 5: Программирование данных и взаимосвязи
+1. Реализация связи многие-ко-многим между продуктами и категориями
+В MongoDB связи многие-ко-многим можно реализовать с помощью массива ссылок. Например, продукт может принадлежать нескольким категориям, а категория может содержать несколько продуктов.
+
+Пример схемы для связи многие-ко-многим
+Коллекция products:
+
+javascript
+Copy
+{
+  _id: ObjectId("..."),
+  name: "Laptop",
+  price: NumberDecimal("1200.50"),
+  categories: [ObjectId("..."), ObjectId("...")] // Ссылки на категории
+}
+Коллекция categories:
+
+javascript
+Copy
+{
+  _id: ObjectId("..."),
+  name: "Electronics"
+}
+Пример запроса для поиска продуктов по категории
+javascript
+Copy
+db.products.find({ categories: ObjectId("...") }); // Вставьте ID категории
